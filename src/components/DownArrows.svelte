@@ -1,4 +1,12 @@
-<div class="arrow cursor-pointer" on:click={() => window.scrollTo(0, document.body.scrollHeight)}>
+<script lang="ts">
+  const handleClick = () => {
+    if (window) {
+      window.scrollTo(0, document.body.scrollHeight)
+    }
+  }
+</script>
+
+<div class="arrow cursor-pointer" on:click={handleClick}>
 	<span />
 	<span />
 	<span />
@@ -7,8 +15,8 @@
 <style>
 	.arrow span {
 		display: block;
-		width: 30px;
-		height: 30px;
+		width: 50px;
+		height: 50px;
 		border-bottom: 5px solid #06a8ff;
 		border-right: 5px solid #06a8ff;
 		transform: rotate(45deg);

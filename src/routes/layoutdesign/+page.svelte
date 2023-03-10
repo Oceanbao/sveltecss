@@ -8,7 +8,9 @@
 		const numArticles = document.querySelectorAll('article').length;
 		const nextIndex = activeIndex - 1 >= 0 ? activeIndex - 1 : numArticles - 1;
 
-		const currentSlide = document.querySelector(`article[data-index="${activeIndex}"]`) as HTMLElement,
+		const currentSlide = document.querySelector(
+				`article[data-index="${activeIndex}"]`
+			) as HTMLElement,
 			nextSlide = document.querySelector(`article[data-index="${nextIndex}"]`) as HTMLElement;
 
 		currentSlide.dataset.status = 'after';
@@ -23,9 +25,11 @@
 
 	const handleRightClick = () => {
 		const numArticles = document.querySelectorAll('article').length;
-    const nextIndex = activeIndex + 1 <= numArticles - 1 ? activeIndex + 1 : 0;
+		const nextIndex = activeIndex + 1 <= numArticles - 1 ? activeIndex + 1 : 0;
 
-		const currentSlide = document.querySelector(`article[data-index="${activeIndex}"]`) as HTMLElement,
+		const currentSlide = document.querySelector(
+				`article[data-index="${activeIndex}"]`
+			) as HTMLElement,
 			nextSlide = document.querySelector(`article[data-index="${nextIndex}"]`) as HTMLElement;
 
 		currentSlide.dataset.status = 'before';
@@ -41,30 +45,20 @@
 	/* -- Mobile Nav Toggle -- */
 	const handleNavToggle = () => {
 		const nav = document.querySelector('nav') as HTMLElement;
-    nav.dataset.transitionable = "true";
-    nav.dataset.toggled = nav.dataset.toggled === "true" ? "false" : "true";
+		nav.dataset.transitionable = 'true';
+		nav.dataset.toggled = nav.dataset.toggled === 'true' ? 'false' : 'true';
 	};
 
 	onMount(() => {
 		window.matchMedia('(max-width: 800px)').onchange = (e) => {
-      const nav = document.querySelector('nav') as HTMLElement;
-      nav.dataset.transitionable = "false";
-      nav.dataset.toggled = "false";
+			const nav = document.getElementById('layoutdesing-nav') as HTMLElement;
+			nav.dataset.transitionable = 'false';
+			nav.dataset.toggled = 'false';
 		};
 	});
 </script>
 
-<svelte:head>
-	<link
-		rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-		integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-		crossorigin="anonymous"
-		referrerpolicy="no-referrer"
-	/>
-</svelte:head>
-
-<nav data-toggled="false" data-transitionable="false">
+<nav id="layoutdesing-nav" data-toggled="false" data-transitionable="false">
 	<div id="nav-logo-section" class="nav-section">
 		<a href="#">
 			<i class="fa-solid fa-dumpster-fire" />
@@ -189,14 +183,12 @@
 </main>
 
 <style>
-	:global(:root) {
+	#layoutdesing-nav {
 		--background-color: rgb(6, 11, 25);
 		--border-color: rgb(255, 255, 255, 0.1);
 		--highlight-color: rgb(126, 87, 194);
 		--yt-color: rgb(229, 57, 53);
-	}
 
-	:global(body) {
 		background-color: var(--background-color);
 		display: flex;
 		flex-direction: column;

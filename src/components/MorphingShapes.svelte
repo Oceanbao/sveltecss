@@ -1,40 +1,40 @@
 <script lang="ts">
-  import {onMount } from 'svelte'
+	import { onMount } from 'svelte';
 
-  onMount(() => {
-    const wrapper = document.getElementById("morphingwrapper") as HTMLElement;
+	onMount(() => {
+		const wrapper = document.getElementById('morphingwrapper') as HTMLElement;
 
-const rand = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
+		const rand = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
 
-const uniqueRand = (min: number, max: number, prev: number) => {
-  let next = prev;
-  
-  while(prev === next) next = rand(min, max);
-  
-  return next;
-}
+		const uniqueRand = (min: number, max: number, prev: number) => {
+			let next = prev;
 
-const combinations = [
-  { configuration: 1, roundness: 1 },
-  { configuration: 1, roundness: 2 },
-  { configuration: 1, roundness: 4 },
-  { configuration: 2, roundness: 2 },
-  { configuration: 2, roundness: 3 },
-  { configuration: 3, roundness: 3 }
-];
+			while (prev === next) next = rand(min, max);
 
-let prev = 0;
+			return next;
+		};
 
-setInterval(() => {
-  const index = uniqueRand(0, combinations.length - 1, prev),
-        combination = combinations[index];
-  
-  wrapper.dataset.configuration = `${combination.configuration}`;
-  wrapper.dataset.roundness = `${combination.roundness}`;
-  
-  prev = index;
-}, 3000);
-  })
+		const combinations = [
+			{ configuration: 1, roundness: 1 },
+			{ configuration: 1, roundness: 2 },
+			{ configuration: 1, roundness: 4 },
+			{ configuration: 2, roundness: 2 },
+			{ configuration: 2, roundness: 3 },
+			{ configuration: 3, roundness: 3 }
+		];
+
+		let prev = 0;
+
+		setInterval(() => {
+			const index = uniqueRand(0, combinations.length - 1, prev),
+				combination = combinations[index];
+
+			wrapper.dataset.configuration = `${combination.configuration}`;
+			wrapper.dataset.roundness = `${combination.roundness}`;
+
+			prev = index;
+		}, 3000);
+	});
 </script>
 
 <section id="morphingshapes">

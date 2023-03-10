@@ -16,15 +16,22 @@
 	};
 
 	onMount(() => {
+    const timers: NodeJS.Timer[] = []
+
 		for (const star of document.getElementsByClassName(
 			'magic-star'
 		) as HTMLCollectionOf<HTMLElement>) {
 			setTimeout(() => {
 				animate(star);
 
-				setInterval(() => animate(star), interval);
+				const timer = setInterval(() => animate(star), interval);
+        timers.push(timer)
 			}, index++ * (interval / 3));
 		}
+
+    return () => {
+      timers.forEach((t, _idx) => clearInterval(t))
+    }
 	});
 </script>
 
@@ -60,7 +67,7 @@
 		--violet: rgb(103, 58, 183);
 		--pink: rgb(244, 143, 177);
 
-		height: 100vh;
+		height: 30vh;
 		width: 100vw;
 		background-color: rgb(10, 10, 10);
 		margin: 0px;

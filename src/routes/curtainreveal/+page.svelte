@@ -1,9 +1,9 @@
 <script lang="ts">
-  let box: HTMLElement
+	let box: HTMLElement;
 
-  const toggleNav = () => {
-    box.dataset.nav = box.dataset.nav === "true" ? "false" : "true";
-  }
+	const toggleNav = () => {
+		box.dataset.nav = box.dataset.nav === 'true' ? 'false' : 'true';
+	};
 </script>
 
 <section bind:this={box} id="curtailreveal">

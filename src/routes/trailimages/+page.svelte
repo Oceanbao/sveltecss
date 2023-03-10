@@ -1,45 +1,45 @@
 <script lang="ts">
-  import {onMount} from 'svelte'
+	import { onMount } from 'svelte';
 
-  onMount(() => {
-    const images = document.querySelectorAll('#trailimage .image') as NodeListOf<HTMLElement>
+	onMount(() => {
+		const images = document.querySelectorAll('#trailimage .image') as NodeListOf<HTMLElement>;
 
-    let globalIndex = 0
-    let last = { x: 0, y: 0}
+		let globalIndex = 0;
+		let last = { x: 0, y: 0 };
 
-    const activate = (image: HTMLElement, x: number, y: number) => {
-      image.style.left = `${x}px`
-      image.style.top = `${y}px`
-      image.style.zIndex = `${globalIndex}`
+		const activate = (image: HTMLElement, x: number, y: number) => {
+			image.style.left = `${x}px`;
+			image.style.top = `${y}px`;
+			image.style.zIndex = `${globalIndex}`;
 
-      image.dataset.status = "active"
+			image.dataset.status = 'active';
 
-      last = { x, y }
-    }
+			last = { x, y };
+		};
 
-    const distanceFromLast = (x: number, y: number) => {
-      return Math.hypot(x - last.x, y - last.y)
-    }
+		const distanceFromLast = (x: number, y: number) => {
+			return Math.hypot(x - last.x, y - last.y);
+		};
 
-    const handleOnMove = (e: MouseEvent) => {
-      if (distanceFromLast(e.clientX, e.clientY) > (window.innerWidth / 20)) {
-        const lead = images[globalIndex % images.length]
-        const tail = images[(globalIndex - 5) % images.length]
+		const handleOnMove = (e: MouseEvent) => {
+			if (distanceFromLast(e.clientX, e.clientY) > window.innerWidth / 20) {
+				const lead = images[globalIndex % images.length];
+				const tail = images[(globalIndex - 5) % images.length];
 
-        activate(lead, e.clientX, e.clientY)
+				activate(lead, e.clientX, e.clientY);
 
-        if (tail) tail.dataset.status = "inactive"
+				if (tail) tail.dataset.status = 'inactive';
 
-        globalIndex++
-      }
-    }
+				globalIndex++;
+			}
+		};
 
-    window.addEventListener('mousemove', handleOnMove)
+		window.addEventListener('mousemove', handleOnMove);
 
-    return () => {
-      window.removeEventListener('mousemove', handleOnMove)
-    }
-  })
+		return () => {
+			window.removeEventListener('mousemove', handleOnMove);
+		};
+	});
 </script>
 
 <section id="trailimage">

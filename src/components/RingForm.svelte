@@ -1,6 +1,3 @@
-<script lang="ts">
-</script>
-
 <section class="container">
 	<div class="box">
 		<div class="form">

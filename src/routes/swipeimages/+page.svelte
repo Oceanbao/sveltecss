@@ -1,75 +1,80 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
+	import { onMount } from 'svelte';
 
-  let track: HTMLElement
+	let track: HTMLElement;
 
-  onMount(() => {
-    const handleOnDown = (e: MouseEvent | TouchEvent) => {
-      let clientX
-      if ('touches' in e) {
-      clientX = e.touches[0].clientX
-      } else {
-        clientX = e.clientX
-      }
-      track.dataset.mouseDownAt = `${clientX}`
-    }
+	onMount(() => {
+		const handleOnDown = (e: MouseEvent | TouchEvent) => {
+			let clientX;
+			if ('touches' in e) {
+				clientX = e.touches[0].clientX;
+			} else {
+				clientX = e.clientX;
+			}
+			track.dataset.mouseDownAt = `${clientX}`;
+		};
 
-    const handleOnUp = (_e: MouseEvent | TouchEvent) => {
-      track.dataset.mouseDownAt = "0";
-      track.dataset.prevPercentage = track.dataset.percentage
-    }
+		const handleOnUp = (_e: MouseEvent | TouchEvent) => {
+			track.dataset.mouseDownAt = '0';
+			track.dataset.prevPercentage = track.dataset.percentage;
+		};
 
-    const handleOnMove = (e: MouseEvent | TouchEvent) => {
-      if (!track.dataset.mouseDownAt || !track.dataset.prevPercentage) return
-      if (track.dataset.mouseDownAt === "0") return
+		const handleOnMove = (e: MouseEvent | TouchEvent) => {
+			if (!track.dataset.mouseDownAt || !track.dataset.prevPercentage) return;
+			if (track.dataset.mouseDownAt === '0') return;
 
-      let clientX
-      if ('touches' in e) {
-      clientX = e.touches[0].clientX
-      } else {
-        clientX = e.clientX
-      }
+			let clientX;
+			if ('touches' in e) {
+				clientX = e.touches[0].clientX;
+			} else {
+				clientX = e.clientX;
+			}
 
-      const mouseDelta = parseFloat(track.dataset.mouseDownAt) - clientX
-      const maxDelta = window.innerWidth / 2
+			const mouseDelta = parseFloat(track.dataset.mouseDownAt) - clientX;
+			const maxDelta = window.innerWidth / 2;
 
-      const percentage = (mouseDelta / maxDelta) * -100
-      const nextPercentageUnconstrained = parseFloat(track.dataset.prevPercentage) + percentage
-      const nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -100);
+			const percentage = (mouseDelta / maxDelta) * -100;
+			const nextPercentageUnconstrained = parseFloat(track.dataset.prevPercentage) + percentage;
+			const nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -100);
 
-      track.dataset.percentage = `${nextPercentage}`;
+			track.dataset.percentage = `${nextPercentage}`;
 
-      track.animate({
-        transform: `translate(${nextPercentage}%, -50%)`
-  }, { duration: 1200, fill: "forwards" });
-        for(const image of track.getElementsByClassName("image")) {
-    image.animate({
-      objectPosition: `${100 + nextPercentage}% center`
-    }, { duration: 1200, fill: "forwards" });
-  }
-    }
+			track.animate(
+				{
+					transform: `translate(${nextPercentage}%, -50%)`
+				},
+				{ duration: 1200, fill: 'forwards' }
+			);
+			for (const image of track.getElementsByClassName('image')) {
+				image.animate(
+					{
+						objectPosition: `${100 + nextPercentage}% center`
+					},
+					{ duration: 1200, fill: 'forwards' }
+				);
+			}
+		};
 
-    window.addEventListener('mousedown', handleOnDown)
-    window.addEventListener('touchstart', handleOnDown)
+		window.addEventListener('mousedown', handleOnDown);
+		window.addEventListener('touchstart', handleOnDown);
 
-    window.addEventListener('mouseup', handleOnUp)
-    window.addEventListener('touchend', handleOnUp)
+		window.addEventListener('mouseup', handleOnUp);
+		window.addEventListener('touchend', handleOnUp);
 
-    window.addEventListener('mousemove', handleOnMove)
-    window.addEventListener('touchmove', handleOnMove)
+		window.addEventListener('mousemove', handleOnMove);
+		window.addEventListener('touchmove', handleOnMove);
 
-    return () => {
-    window.removeEventListener('mousedown', handleOnDown)
-    window.removeEventListener('touchstart', handleOnDown)
+		return () => {
+			window.removeEventListener('mousedown', handleOnDown);
+			window.removeEventListener('touchstart', handleOnDown);
 
-    window.removeEventListener('mouseup', handleOnUp)
-    window.removeEventListener('touchend', handleOnUp)
+			window.removeEventListener('mouseup', handleOnUp);
+			window.removeEventListener('touchend', handleOnUp);
 
-    window.removeEventListener('mousemove', handleOnMove)
-    window.removeEventListener('touchmove', handleOnMove)
-
-    }
-  })
+			window.removeEventListener('mousemove', handleOnMove);
+			window.removeEventListener('touchmove', handleOnMove);
+		};
+	});
 </script>
 
 <section id="swipeimages">

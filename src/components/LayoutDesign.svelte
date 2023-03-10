@@ -8,8 +8,12 @@
 		const numArticles = document.querySelectorAll('#layoutdesign main article').length;
 		const nextIndex = activeIndex - 1 >= 0 ? activeIndex - 1 : numArticles - 1;
 
-		const currentSlide = document.querySelector(`#layoutdesign article[data-index="${activeIndex}"]`) as HTMLElement,
-			nextSlide = document.querySelector(`#layoutdesign article[data-index="${nextIndex}"]`) as HTMLElement;
+		const currentSlide = document.querySelector(
+				`#layoutdesign article[data-index="${activeIndex}"]`
+			) as HTMLElement,
+			nextSlide = document.querySelector(
+				`#layoutdesign article[data-index="${nextIndex}"]`
+			) as HTMLElement;
 
 		currentSlide.dataset.status = 'after';
 
@@ -23,10 +27,14 @@
 
 	const handleRightClick = () => {
 		const numArticles = document.querySelectorAll('#layoutdesign main article').length;
-    const nextIndex = activeIndex + 1 <= numArticles - 1 ? activeIndex + 1 : 0;
+		const nextIndex = activeIndex + 1 <= numArticles - 1 ? activeIndex + 1 : 0;
 
-		const currentSlide = document.querySelector(`#layoutdesign article[data-index="${activeIndex}"]`) as HTMLElement,
-			nextSlide = document.querySelector(`#layoutdesign article[data-index="${nextIndex}"]`) as HTMLElement;
+		const currentSlide = document.querySelector(
+				`#layoutdesign article[data-index="${activeIndex}"]`
+			) as HTMLElement,
+			nextSlide = document.querySelector(
+				`#layoutdesign article[data-index="${nextIndex}"]`
+			) as HTMLElement;
 
 		currentSlide.dataset.status = 'before';
 
@@ -41,15 +49,15 @@
 	/* -- Mobile Nav Toggle -- */
 	const handleNavToggle = () => {
 		const nav = document.querySelector('#layoutdesign nav') as HTMLElement;
-    nav.dataset.transitionable = "true";
-    nav.dataset.toggled = nav.dataset.toggled === "true" ? "false" : "true";
+		nav.dataset.transitionable = 'true';
+		nav.dataset.toggled = nav.dataset.toggled === 'true' ? 'false' : 'true';
 	};
 
 	onMount(() => {
 		window.matchMedia('(max-width: 800px)').onchange = (e) => {
-      const nav = document.querySelector('#layoutdesign nav') as HTMLElement;
-      nav.dataset.transitionable = "false";
-      nav.dataset.toggled = "false";
+			const nav = document.querySelector('#layoutdesign nav') as HTMLElement;
+			nav.dataset.transitionable = 'false';
+			nav.dataset.toggled = 'false';
 		};
 	});
 </script>
