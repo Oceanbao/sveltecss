@@ -2,9 +2,30 @@
 	import '@/app.css';
 	import ExpandingMenu from '@/components/ExpandingMenu.svelte';
 
-	export let data;
+	let routes = [
+		'3dbubbles',
+		'animegrid',
+		'cssBits',
+		'csslayout',
+		'curtainreveal',
+		'cyberletters',
+		'fixedscroll',
+		'imageslider',
+		'layoutdesign',
+		'movingglow',
+		'netflowcard',
+		'parallaxmenu',
+		'shiftinggallery',
+		'stickybg',
+		'swipecards',
+		'swipeimage',
+		'tailwind',
+		'threelinks',
+		'trailimages',
+		'twichcard'
+	];
 
-	let links = data.routes
+	let links = routes
 		.map((dir) => ({ href: `/${dir}`, text: dir }))
 		.concat({
 			href: '/',
