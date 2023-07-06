@@ -1,0 +1,585 @@
+<script lang="ts">
+	import { onMount } from 'svelte';
+
+	/* -- Carousel Navigation -- */
+	let activeIndex = 0;
+
+	const handleLeftClick = () => {
+		const numArticles = document.querySelectorAll('#layoutdesign main article').length;
+		const nextIndex = activeIndex - 1 >= 0 ? activeIndex - 1 : numArticles - 1;
+
+		const currentSlide = document.querySelector(
+				`#layoutdesign article[data-index="${activeIndex}"]`
+			) as HTMLElement,
+			nextSlide = document.querySelector(
+				`#layoutdesign article[data-index="${nextIndex}"]`
+			) as HTMLElement;
+
+		currentSlide.dataset.status = 'after';
+
+		nextSlide.dataset.status = 'becoming-active-from-before';
+
+		setTimeout(() => {
+			nextSlide.dataset.status = 'active';
+			activeIndex = nextIndex;
+		});
+	};
+
+	const handleRightClick = () => {
+		const numArticles = document.querySelectorAll('#layoutdesign main article').length;
+		const nextIndex = activeIndex + 1 <= numArticles - 1 ? activeIndex + 1 : 0;
+
+		const currentSlide = document.querySelector(
+				`#layoutdesign article[data-index="${activeIndex}"]`
+			) as HTMLElement,
+			nextSlide = document.querySelector(
+				`#layoutdesign article[data-index="${nextIndex}"]`
+			) as HTMLElement;
+
+		currentSlide.dataset.status = 'before';
+
+		nextSlide.dataset.status = 'becoming-active-from-after';
+
+		setTimeout(() => {
+			nextSlide.dataset.status = 'active';
+			activeIndex = nextIndex;
+		});
+	};
+
+	/* -- Mobile Nav Toggle -- */
+	const handleNavToggle = () => {
+		const nav = document.querySelector('#layoutdesign nav') as HTMLElement;
+		nav.dataset.transitionable = 'true';
+		nav.dataset.toggled = nav.dataset.toggled === 'true' ? 'false' : 'true';
+	};
+
+	onMount(() => {
+		window.matchMedia('(max-width: 800px)').onchange = (e) => {
+			const nav = document.querySelector('#layoutdesign nav') as HTMLElement;
+			nav.dataset.transitionable = 'false';
+			nav.dataset.toggled = 'false';
+		};
+	});
+</script>
+
+<svelte:head>
+	<link
+		rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+		integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+		crossorigin="anonymous"
+		referrerpolicy="no-referrer"
+	/>
+</svelte:head>
+
+<section id="layoutdesign">
+	<nav data-toggled="false" data-transitionable="false">
+		<div id="nav-logo-section" class="nav-section">
+			<a href="#">
+				<i class="fa-solid fa-dumpster-fire" />
+			</a>
+		</div>
+		<div id="nav-mobile-section">
+			<div id="nav-link-section" class="nav-section">
+				<a href="#">ABOUT</a>
+				<a href="#">WORK</a>
+			</div>
+			<div id="nav-social-section" class="nav-section">
+				<a href="#">
+					<i class="fa-brands fa-twitter" />
+				</a>
+				<a href="https://www.youtube.com/c/Hyperplexed" target="_blank">
+					<i class="fa-brands fa-youtube" />
+				</a>
+				<a href="#">
+					<i class="fa-brands fa-codepen" />
+				</a>
+			</div>
+			<div id="nav-contact-section" class="nav-section">
+				<a href="#">GET IN TOUCH</a>
+			</div>
+		</div>
+		<button id="nav-toggle-button" type="button" on:click={handleNavToggle}>
+			<span>Menu</span>
+			<i class="fa-solid fa-bars" />
+		</button>
+	</nav>
+
+	<main>
+		<article data-index="0" data-status="active">
+			<div class="article-image-section article-section" />
+			<div class="article-description-section article-section">
+				<p>
+					This is a recreation (from scratch) of <a
+						class="source-link"
+						href="https://www.dylanbrouwer.design/work"
+						target="_blank">dylanbrouwer.design/work</a
+					>. See how I did it
+					<a class="yt-link" href="https://youtu.be/nG2IyH43xMU" target="_blank"
+						><i class="fa-brands fa-youtube" /></a
+					>.
+				</p>
+			</div>
+			<div class="article-title-section article-section">
+				<h2>Recreation From Scratch</h2>
+				<i class="fa-light fa-plus-large" />
+			</div>
+			<div class="article-nav-section article-section">
+				<button class="article-nav-button" type="button" on:click={handleLeftClick}>
+					<i class="fa-light fa-arrow-left-long" />
+				</button>
+				<button class="article-nav-button" type="button" on:click={handleRightClick}>
+					<i class="fa-light fa-arrow-right-long" />
+				</button>
+			</div>
+		</article>
+		<article data-index="1" data-status="inactive">
+			<div class="article-image-section article-section" />
+			<div class="article-description-section article-section">
+				<p>
+					A place where books hang out waiting to be grabbed. But don't be too grabby now, ya hear.
+				</p>
+			</div>
+			<div class="article-title-section article-section">
+				<h2>Wicked Cool Library Shelves</h2>
+				<i class="fa-light fa-plus-large" />
+			</div>
+			<div class="article-nav-section article-section">
+				<button class="article-nav-button" type="button" on:click={handleLeftClick}>
+					<i class="fa-light fa-arrow-left-long" />
+				</button>
+				<button class="article-nav-button" type="button" on:click={handleRightClick}>
+					<i class="fa-light fa-arrow-right-long" />
+				</button>
+			</div>
+		</article>
+		<article data-index="2" data-status="inactive">
+			<div class="article-image-section article-section" />
+			<div class="article-description-section article-section">
+				<p>
+					The neatest lighthouse you ever saw. Ehh, actually it's kind of messy. But that's why the
+					pic is of the outside.
+				</p>
+			</div>
+			<div class="article-title-section article-section">
+				<h2>Neato Toledo Lighthouse</h2>
+				<i class="fa-light fa-plus-large" />
+			</div>
+			<div class="article-nav-section article-section">
+				<button class="article-nav-button" type="button" on:click={handleLeftClick}>
+					<i class="fa-light fa-arrow-left-long" />
+				</button>
+				<button class="article-nav-button" type="button" on:click={handleRightClick}>
+					<i class="fa-light fa-arrow-right-long" />
+				</button>
+			</div>
+		</article>
+		<article data-index="3" data-status="inactive">
+			<div class="article-image-section article-section" />
+			<div class="article-description-section article-section">
+				<p>
+					The blobiest of blobs nestled deep in the heart of outer space. Well, technically the
+					universe is both infinite and homogeneous so there isn't really a heart, per se.
+				</p>
+			</div>
+			<div class="article-title-section article-section">
+				<h2>Super Space Blob</h2>
+				<i class="fa-light fa-plus-large" />
+			</div>
+			<div class="article-nav-section article-section">
+				<button class="article-nav-button" type="button" on:click={handleLeftClick}>
+					<i class="fa-light fa-arrow-left-long" />
+				</button>
+				<button class="article-nav-button" type="button" on:click={handleRightClick}>
+					<i class="fa-light fa-arrow-right-long" />
+				</button>
+			</div>
+		</article>
+	</main>
+</section>
+
+<style>
+	:global(:root) {
+		--background-color: rgb(6, 11, 25);
+		--border-color: rgb(255, 255, 255, 0.1);
+		--highlight-color: rgb(126, 87, 194);
+		--yt-color: rgb(229, 57, 53);
+	}
+
+	:global(body) {
+		background-color: var(--background-color);
+		display: flex;
+		flex-direction: column;
+		height: 100vh;
+		overflow: hidden;
+	}
+
+	section {
+		font-family: 'Rubik', sans-serif;
+		font-weight: 400;
+		color: white;
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	a:hover {
+		color: var(--highlight-color);
+	}
+
+	nav {
+		display: flex;
+		width: 100%;
+		border-bottom: 1px solid var(--border-color);
+	}
+
+	nav .nav-section {
+		padding: 3rem 2rem;
+		display: flex;
+		gap: 1rem;
+		border-left: 1px solid var(--border-color);
+		align-items: center;
+		justify-content: center;
+	}
+
+	#nav-mobile-section {
+		display: flex;
+		flex-basis: calc(100% * (2 / 3));
+		z-index: 2;
+	}
+
+	#nav-toggle-button {
+		align-items: center;
+		background-color: transparent;
+		border: none;
+		border-left: 1px solid var(--border-color);
+		color: white;
+		cursor: pointer;
+		display: none;
+		gap: 0.8rem;
+		height: 100%;
+		justify-content: center;
+		outline: none;
+		padding: 0rem 3rem;
+		position: relative;
+		z-index: 3;
+	}
+
+	#nav-toggle-button:hover,
+	#nav-toggle-button:hover > span {
+		color: var(--highlight-color);
+	}
+
+	#nav-toggle-button > span,
+	#nav-toggle-button > i {
+		display: inline-block;
+		height: 1rem;
+		line-height: 1rem;
+	}
+
+	#nav-social-section,
+	#nav-contact-section {
+		flex-grow: 1;
+	}
+
+	#nav-logo-section {
+		flex-basis: calc(100% / 3);
+		justify-content: flex-start;
+	}
+
+	#nav-logo-section > a > i {
+		font-size: 2.5rem;
+	}
+
+	#nav-link-section {
+		flex-basis: 50%;
+		gap: 6rem;
+	}
+
+	#nav-social-section {
+		gap: 3rem;
+	}
+
+	main {
+		flex-grow: 1;
+		position: relative;
+		overflow: hidden;
+	}
+
+	main > article {
+		height: 100%;
+		width: 100%;
+		display: grid;
+		grid-template-columns: 2fr 1fr;
+		grid-template-rows: 2fr 1fr;
+		position: absolute;
+		left: 0px;
+		top: 0px;
+		transition: transform 400ms ease;
+	}
+
+	main > article[data-status='inactive'] {
+		transform: translateX(-100%);
+		transition: none;
+	}
+
+	main > article[data-status='active'] {
+		transform: translateX(0%);
+	}
+
+	main > :where(article[data-status='before']) {
+		transform: translateX(-100%);
+	}
+
+	main > :where(article[data-status='after']) {
+		transform: translateX(100%);
+	}
+
+	main > :where(article[data-status='becoming-active-from-before']) {
+		transform: translateX(-100%);
+		transition: none;
+	}
+
+	main > :where(article[data-status='becoming-active-from-after']) {
+		transform: translateX(100%);
+		transition: none;
+	}
+
+	main > article > .article-section {
+		height: 100%;
+		display: flex;
+	}
+
+	main > article > .article-description-section,
+	main > article > .article-nav-section {
+		border-left: 1px solid var(--border-color);
+	}
+
+	main > article > .article-title-section,
+	main > article > .article-nav-section {
+		border-top: 1px solid var(--border-color);
+	}
+
+	main > article:first-child > .article-image-section {
+		background-image: url('https://images.unsplash.com/photo-1565626424178-c699f6601afd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80');
+	}
+
+	main > article:nth-child(2) > .article-image-section {
+		background-image: url('https://images.unsplash.com/photo-1535905557558-afc4877a26fc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2574&q=80');
+	}
+
+	main > article:nth-child(3) > .article-image-section {
+		background-image: url('https://images.unsplash.com/photo-1660580554695-d2ca5008f1f2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=927&q=80');
+	}
+
+	main > article:nth-child(4) > .article-image-section {
+		background-image: url('https://images.unsplash.com/photo-1660766877755-4cac24f6cf21?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2232&q=80');
+	}
+
+	main > article > .article-image-section {
+		background-position: center;
+		background-size: cover;
+	}
+
+	main > article > .article-description-section {
+		flex-direction: column;
+		justify-content: flex-end;
+		padding: 4rem;
+	}
+
+	main > article > .article-description-section > p {
+		color: rgba(255, 255, 255, 0.5);
+		font-size: 1.25em;
+	}
+
+	main > article > .article-description-section > p > a:hover {
+		text-decoration: underline;
+	}
+
+	main > article > .article-title-section {
+		align-items: center;
+		justify-content: space-between;
+		padding: 2rem 4rem;
+	}
+
+	main > article > .article-title-section * {
+		color: white;
+	}
+
+	main > article > .article-title-section > h2 {
+		flex-basis: 50%;
+		font-family: 'Montserrat', sans-serif;
+		font-size: 3.5rem;
+		line-height: 3rem;
+		margin: 0px;
+		text-transform: uppercase;
+	}
+
+	main > article > .article-title-section > i {
+		color: rgba(255, 255, 255, 0.75);
+		font-size: 4rem;
+	}
+
+	main > article > .article-nav-section > .article-nav-button {
+		background-color: transparent;
+		flex-grow: 1;
+		border: none;
+		outline: none;
+		color: rgba(255, 255, 255, 0.75);
+		font-size: 3rem;
+		cursor: pointer;
+	}
+
+	main > article > .article-nav-section > .article-nav-button:hover {
+		background-color: rgba(255, 255, 255, 0.02);
+	}
+
+	main > article > .article-nav-section > .article-nav-button:nth-child(2) {
+		border-left: 1px solid var(--border-color);
+	}
+
+	@media (max-width: 1200px) {
+		#nav-mobile-section {
+			flex-basis: calc(100% * 0.75);
+		}
+
+		#nav-logo-section {
+			flex-basis: calc(100% * 0.25);
+		}
+
+		#nav-link-section {
+			flex-basis: calc(100% / 3);
+			gap: 3rem;
+		}
+
+		main {
+			overflow-y: auto;
+		}
+
+		main > article {
+			grid-template-columns: none;
+			grid-template-rows: 1.5fr repeat(3, 0.75fr) 0.25fr;
+			height: max(900px, 100%);
+		}
+
+		main > article > .article-title-section > h2 {
+			font-size: 3rem;
+			line-height: 2.6rem;
+		}
+
+		main > article > .article-title-section > i {
+			font-size: 3rem;
+		}
+
+		main > article > .article-description-section,
+		main > article > .article-nav-section {
+			border-left: none;
+		}
+
+		main > article > .article-image-section {
+			order: 1;
+		}
+
+		main > article > .article-title-section {
+			border-bottom: 1px solid var(--border-color);
+			order: 2;
+		}
+
+		main > article > .article-description-section {
+			justify-content: center;
+			order: 3;
+		}
+
+		main > article > .article-nav-section {
+			border-bottom: 1px solid var(--border-color);
+			order: 4;
+		}
+	}
+
+	@media (max-width: 800px) {
+		nav {
+			justify-content: space-between;
+		}
+
+		:where(nav[data-toggled='true'] > #nav-mobile-section) {
+			transform: translateY(0%);
+		}
+
+		:where(nav[data-toggled='true'] > #nav-toggle-button) {
+			border-left: none;
+		}
+
+		:where(nav[data-transitionable='true'] > #nav-mobile-section) {
+			transition: transform 400ms ease;
+		}
+
+		nav .nav-section {
+			border-left: none;
+			padding: 1.5rem 1rem;
+		}
+
+		#nav-logo-section > a > i {
+			font-size: 1.5rem;
+			margin-left: 1rem;
+		}
+
+		#nav-mobile-section {
+			background-color: var(--background-color);
+			flex-direction: column;
+			height: 100vh;
+			width: 100vw;
+			position: fixed;
+			transform: translateY(-100%);
+		}
+
+		#nav-toggle-button {
+			display: flex;
+		}
+
+		#nav-link-section {
+			flex-basis: 60%;
+			flex-direction: column;
+			gap: 4rem;
+		}
+
+		#nav-link-section > a {
+			font-size: 3rem;
+		}
+
+		#nav-social-section > a {
+			font-size: 2rem;
+		}
+
+		#nav-contact-section {
+			padding-bottom: 4rem;
+		}
+
+		main > article {
+			grid-template-rows: 1fr repeat(4, 0.5fr);
+			height: max(700px, 100%);
+		}
+
+		main > article > .article-title-section {
+			padding: 2rem;
+		}
+
+		main > article > .article-title-section > h2 {
+			flex-basis: 70%;
+			font-size: 1.75em;
+			line-height: 1.5rem;
+		}
+
+		main > article > .article-title-section > i {
+			font-size: 2rem;
+		}
+
+		main > article > .article-description-section {
+			padding: 2rem;
+		}
+
+		main > article > .article-description-section > p {
+			font-size: 1rem;
+		}
+	}
+</style>
