@@ -3,6 +3,7 @@
 	import ExpandingMenu from '@/components/ExpandingMenu.svelte';
 
 	let routes = [
+		'designui',
 		'3dbubbles',
 		'animegrid',
 		'cssBits',
